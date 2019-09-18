@@ -30,6 +30,14 @@ def get_database_server_port():
     return int(get_property("DatabaseServerPort", 27017))
 
 
+def get_catalog_server_port():
+    return int(get_property("CatalogServerPort", 3002))
+
+
+def get_catalog_server_url():
+    return get_property("CatalogServerUrl", "localhost")
+
+
 def get_property(name, default):
     if "DEFAULT" in config:
         if name in config["DEFAULT"]:

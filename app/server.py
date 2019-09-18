@@ -3,24 +3,26 @@ import os.path
 import flask
 from flask_cors import CORS
 
-import app.domain.reviews.routes as reviewRoutes
-# import app.domain.scores.route as scoreRoutes
-# import app.gateway.rabbit_service as rabbitService
+import app.domain.reviews.routes as review_routes
+import app.domain.scores.routes as score_routes
+import app.gateway.rabbit as rabbit_service
 import app.utils.config as config
+
 
 class MainApp:
     def __init__(self):
         self.flask_app = flask.Flask(__name__, static_folder='../public')
+        flask.current_app = self.flask_app
         CORS(self.flask_app, supports_credentials=True, automatic_options=True)
 
-        # self._generate_api_doc()
-        # self._init_routes()
-        # self._init_rabbit()
+        self._generate_api_doc()
+        self._init_routes()
+        self._init_rabbit()
         self._init_reviews()
-        # self._init_scores()
+        self._init_scores()
 
     def _generate_api_doc(self):
-        os.system("apidoc -i ./ -o ./public")
+        os.system("apidoc -i app/ -o ./public")
 
     def _init_routes(self):
         # Servidor de archivos estáticos de apidoc
@@ -34,13 +36,13 @@ class MainApp:
             return flask.send_from_directory('../public', "index.html")
 
     def _init_rabbit(self):
-        rabbitService.init()
+        rabbit_service.init()
 
     def _init_reviews(self):
-        reviewRoutes.init(self.flask_app)
+        review_routes.init(self.flask_app)
 
     def _init_scores(self):
-        scoreRoutes.init(self.flask_app)
+        score_routes.init(self.flask_app)
 
     def get_flask_app(self):
         return self.flask_app

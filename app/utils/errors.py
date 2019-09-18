@@ -1,4 +1,3 @@
-# coding=utf_8
 
 """
 @apiDefine Errors
@@ -22,9 +21,12 @@
         "error" : "{Motivo del error}"
     }
 """
+
 import traceback
 
 import app.utils.json_serializer as json
+
+# context = app.app_context()
 
 
 class InvalidRequest(Exception):
@@ -90,6 +92,7 @@ def handleMultipleArgumentException(err):
     return json.dic_to_json({"messages": [{"path": k, "message": v} for k, v in err.errors.items()]}), 400
 
 
+
 def handleInvalidArgument(err):
     """
     Argumento con errores.
@@ -132,4 +135,4 @@ def handleInvalidAccessLevel(err):
     err: InvalidAuth
     result json error a enviar al cliente
     """
-    return json.dic_to_json({"error": "Insufficient access level"}), 401
+    return json.dic_to_json({"error": "Forbidden"}), 403

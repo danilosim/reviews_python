@@ -1,17 +1,13 @@
-# coding=utf_8
-
 import http.client
 import socket
-
-import memoize
 
 import app.utils.config as config
 import app.utils.errors as errors
 import app.utils.json_serializer as json
+import memoize
 
-memoKeys = {}
-
-memo = memoize.Memoizer(memoKeys)
+memo_keys = {}
+memo = memoize.Memoizer(memo_keys)
 
 """
 @apiDefine AuthHeader
@@ -31,7 +27,7 @@ def isValidToken(authKey):
     authKey: string El header Authorization enviado por el cliente
     return dict<property, value> CurrentUser
     """
-    if (not isinstance(authKey, str) or len(authKey) == 0):
+    if not isinstance(authKey, str) or len(authKey) == 0:
         raise errors.InvalidAuth()
 
     headers = {"Authorization".encode("utf-8"): authKey.encode("utf-8")}
@@ -60,15 +56,15 @@ def validateAdminRole(token):
     token: string Header Auth Token
     """
     profile = isValidToken(token)
-    if ("permissions" not in profile or "admin" not in profile["permissions"]):
+    if "permissions" not in profile or "admin" not in profile["permissions"]:
         raise errors.InvalidAccessLevel()
 
 
-def invalidateSession(token):
+def invalidate_session(token):
     """
     Invalida un token del cache.\n
     token: string Header Auth Token
     """
-    if (isinstance(token, str) and isValidToken.exists((token, ))):
+    if isinstance(token, str) and isValidToken.exists((token,)):
         print("Key eliminada %r" % token)
-        isValidToken.delete((token, ))
+        isValidToken.delete((token,))

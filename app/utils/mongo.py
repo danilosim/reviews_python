@@ -8,4 +8,5 @@ client = pymongo.MongoClient(config.get_database_server_url(), config.get_databa
 
 db = client['reviews']
 
-reviews = db.reviews
+review = db.review
+score = db.score
