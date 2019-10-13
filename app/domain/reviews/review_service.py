@@ -1,19 +1,11 @@
 import datetime
 
 import bson.objectid as bson
-import http.client
-import socket
+
 
 import app.domain.reviews.review_schema as schema
-import app.utils.config as config
 import app.utils.errors as error
 import app.utils.mongo as db
-import app.utils.errors as errors
-import app.utils.json_serializer as json
-import memoize
-
-memo_keys = {}
-memo = memoize.Memoizer(memo_keys)
 
 
 def add_review(params, id_user):
@@ -46,8 +38,6 @@ def add_review(params, id_user):
 
     """
 
-    get_article(params['id_article'])
-
     review = schema.new_review()
 
     r = db.review.find_one({'id_user': id_user, 'id_article': params['id_article'], 'active': True})
@@ -64,23 +54,6 @@ def add_review(params, id_user):
     del review['active']
 
     return review
-
-
-@memo(max_age=30)
-def get_article(id_article):
-    conn = http.client.HTTPConnection(
-        socket.gethostbyname(config.get_catalog_server_url()),
-        config.get_catalog_server_port(),
-    )
-
-    try:
-        conn.request("GET", "/v1/articles/{}".format(id_article), {})
-        response = conn.getresponse()
-        if response.status != 200 or (not json.body_to_dic(response.read().decode('utf-8'))['enabled']):
-            raise errors.InvalidArgument('id_article', 'Invalido')
-        return json.dic_to_json(response.read().decode('utf-8'))
-    except Exception:
-        raise Exception
 
 
 def disable_review(id_article, id_user):
@@ -114,8 +87,6 @@ def disable_review(id_article, id_user):
             }
 
     """
-
-    get_article(id_article)
 
     result = db.review.find_one({"id_article": id_article, "id_user": id_user, "active": True})
     if not result:
@@ -158,8 +129,6 @@ def get_article_reviews(id_article):
         @apiUse Errors
 
         """
-
-    get_article(id_article)
 
     result = [article for article in db.review.find({"id_article": id_article, 'active': True})]
     if not result:

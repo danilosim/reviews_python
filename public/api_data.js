@@ -95,7 +95,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "app/domain/reviews/crud_service.py",
+    "filename": "app/domain/reviews/review_service.py",
     "groupTitle": "Reviews"
   },
   {
@@ -126,7 +126,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "app/domain/reviews/crud_service.py",
+    "filename": "app/domain/reviews/review_service.py",
     "groupTitle": "Reviews",
     "error": {
       "examples": [
@@ -169,7 +169,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "app/domain/reviews/crud_service.py",
+    "filename": "app/domain/reviews/review_service.py",
     "groupTitle": "Reviews",
     "examples": [
       {
@@ -219,7 +219,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "app/domain/scores/crud_service.py",
+    "filename": "app/domain/scores/score_service.py",
     "groupTitle": "Scores",
     "examples": [
       {
@@ -281,7 +281,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "app/domain/scores/crud_service.py",
+    "filename": "app/domain/scores/score_service.py",
     "groupTitle": "Scores",
     "error": {
       "examples": [
@@ -324,7 +324,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "app/domain/scores/crud_service.py",
+    "filename": "app/domain/scores/score_service.py",
     "groupTitle": "Scores",
     "examples": [
       {

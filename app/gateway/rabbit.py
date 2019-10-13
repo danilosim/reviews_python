@@ -1,10 +1,6 @@
 import threading
-import traceback
-
 import pika
 
-import app.domain.scores.crud_service as crud
-import app.domain.scores.rest_validations as score_validation
 import app.utils.config as config
 import app.utils.json_serializer as json
 import app.utils.schema_validator as validator

@@ -1,19 +1,9 @@
 import datetime
 
-import http.client
-import socket
-
 import app.domain.scores.score_schema as schema
-import app.utils.config as config
 import app.utils.mongo as db
 import app.utils.errors as errors
-import app.utils.json_serializer as json
 import app.gateway.rabbit as rabbit
-
-import memoize
-
-memo_keys = {}
-memo = memoize.Memoizer(memo_keys)
 
 
 def add_score(parameters, id_user):
@@ -43,7 +33,6 @@ def add_score(parameters, id_user):
         @apiUse Errors
 
     """
-    get_article(parameters['id_article'])
 
     score = schema.new_score()
 
@@ -87,7 +76,6 @@ def disable_score(id_article, id_user):
         @apiUse Errors
 
     """
-    get_article(id_article)
 
     r = db.score.find_one({'id_user': id_user, 'id_article': id_article, 'active': True})
     if r:
@@ -120,27 +108,9 @@ def get_score_article(id_article):
 
     """
 
-    get_article(id_article)
     score = calculate_score(id_article)
 
     return {'id_article': id_article, 'value': float("%.2f" % score)}
-
-
-@memo(max_age=30)
-def get_article(id_article):
-    conn = http.client.HTTPConnection(
-        socket.gethostbyname(config.get_catalog_server_url()),
-        config.get_catalog_server_port(),
-    )
-
-    try:
-        conn.request("GET", "/v1/articles/{}".format(id_article), {})
-        response = conn.getresponse()
-        if response.status != 200 or (not json.body_to_dic(response.read().decode('utf-8'))['enabled']):
-            raise errors.InvalidArgument('id_article', 'Invalido')
-        return json.dic_to_json(response.read().decode('utf-8'))
-    except Exception:
-        raise Exception
 
 
 def calculate_score(id_article):
