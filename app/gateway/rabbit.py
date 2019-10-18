@@ -87,7 +87,7 @@ def send_new_score(id_article, score):
     """
     Envía eventos cuando hay un nuevo score para un artículo
 
-    @api {fanout} cart/article-data Nuevo Score
+    @api {fanout} score/new_score Nuevo Score
 
     @apiGroup RabbitMQ POST
 

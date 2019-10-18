@@ -19,7 +19,7 @@
   },
   {
     "type": "fanout",
-    "url": "cart/article-data",
+    "url": "score/new_score",
     "title": "Nuevo Score",
     "group": "RabbitMQ_POST",
     "description": "<p>Enviá mensajes de nuevo score</p>",
@@ -35,7 +35,7 @@
     "version": "0.0.0",
     "filename": "app/gateway/rabbit.py",
     "groupTitle": "RabbitMQ_POST",
-    "name": "FanoutCartArticleData"
+    "name": "FanoutScoreNew_score"
   },
   {
     "type": "delete",
@@ -309,7 +309,7 @@
     }
   },
   {
-    "type": "post",
+    "type": "get",
     "url": "/v1/scores/<string:id_article>",
     "title": "Obtener Score",
     "name": "Obtener_Score",

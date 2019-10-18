@@ -91,7 +91,7 @@ def disable_score(id_article, id_user):
 
 def get_score_article(id_article):
     """
-        @api {post} /v1/scores/<string:id_article> Obtener Score
+        @api {get} /v1/scores/<string:id_article> Obtener Score
         @apiName Obtener Score
         @apiGroup Scores
 
